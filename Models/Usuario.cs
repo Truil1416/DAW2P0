@@ -8,6 +8,6 @@ namespace DAW2P0.Models
     public class Usuario
     {
         public String user { get; set; }
-        public String password { get; set; }
+        public String password { get; set; }//cambio random
     }
 }
