@@ -1,8 +1,43 @@
-﻿@{
+﻿@model DAW2P0.Business.Formulario
+@{
     ViewData["Title"] = "Home Page";
 }
+@{
+    if (!User.Identity.IsAuthenticated)
+    {
+        <div class="text-center">
+            <h1 class="display-4">¡Hola!</h1>
+            <p>Aquí podrás rellenar un cuestionario una vez estes logueado. <a asp-action="Login">Pulsa aquí para loguearte</a>.</p>
+        </div>
+    }
+    else
+    {
+        <form asp-action="mandarFormulario" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="nombre" class="control-label">Nombre</label>
+                <input asp-for="nombre" class="form-control" />
+                <span asp-validation-for="nombre" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="primerApellido" class="control-label">Primer Apellido</label>
+                <input asp-for="primerApellido" class="form-control" />
+                <span asp-validation-for="primerApellido" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="segundoApellido" class="control-label">Segundo Apellido</label>
+                <input asp-for="segundoApellido" class="form-control" />
+                <span asp-validation-for="segundoApellido" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="opinion" class="control-label">Opinión</label>
+                <input asp-for="opinion" class="form-control" />
+                <span asp-validation-for="opinion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Mandar" class="btn btn-primary" />
+            </div>
+        </form>
+    }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+}

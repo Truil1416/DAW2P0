@@ -1,12 +1,16 @@
 ﻿using DAW2P0.Business;
 using DAW2P0.Models;
 using DAW2P0.Services;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace DAW2P0.Controllers
@@ -38,6 +42,7 @@ namespace DAW2P0.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
         #endregion
+        #region Login/LogOut
         public IActionResult Login()
         {
             return View();
@@ -62,8 +67,47 @@ namespace DAW2P0.Controllers
                     param1 = 200,
                     param2 = "Usuario Correcto"
                 };
+                //codigo del trabajo
+                var claims = new List<Claim>()
+                {
+                    new Claim(ClaimTypes.Name, usuario.user),
+                    new Claim(ClaimTypes.NameIdentifier, usuario.user)
+                };
+                var userIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);
+
+                var authProperties = new AuthenticationProperties
+                {
+                    AllowRefresh = true,
+                    ExpiresUtc = DateTimeOffset.UtcNow.AddHours(8),
+                };
+
+                HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+
+                HttpContext.Session.SetString("UsuarioLogin", usuario.user);
+                //hasta aquí
                 return Json(showMessageString);
             }
+        }
+        public IActionResult LogOut()
+        {
+            HttpContext.Session.Clear();
+            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Login");
+        }
+        #endregion
+        #region Manejo del Formulario
+        [HttpPost]
+        public IActionResult mandarFormulario(Formulario formulario)
+        {
+            ServiceManager.GetFormularioService().guardarFormulario(formulario);
+            return RedirectToAction("Agradecimiento");
+        }
+        #endregion
+        public IActionResult Agradecimiento()
+        {
+            return View();
         }
     }
 }

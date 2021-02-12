@@ -1,4 +1,5 @@
-﻿using DAW2P0.Services.Api;
+﻿using DAW2P0.Business;
+using DAW2P0.Services.Api;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +14,11 @@ namespace DAW2P0.Services.Impl
         {
             this.serviceManager = serviceManager;
         }
+
+        public void guardarFormulario(Formulario formulario)
+        {
+            //Guardamos el formulario
+        }
+
     }
 }

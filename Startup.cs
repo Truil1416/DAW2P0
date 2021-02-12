@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -23,7 +24,29 @@ namespace DAW2P0
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //codigo sacado de mi trabajo
             services.AddControllersWithViews();
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+              .AddCookie(config =>
+              {
+                  config.Cookie.Name = "GENIUS.Cookie";
+                  config.LoginPath = "/Inicio/Login";
+                  config.AccessDeniedPath = "/Inicio/AccessDenied";
+              });
+            services.AddDistributedMemoryCache();
+            services.AddControllersWithViews()
+                    .AddSessionStateTempDataProvider();
+            services.AddRazorPages()
+                    .AddSessionStateTempDataProvider();
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromHours(8);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+            services
+                .AddControllersWithViews()
+                .AddRazorRuntimeCompilation();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,7 +67,10 @@ namespace DAW2P0
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {

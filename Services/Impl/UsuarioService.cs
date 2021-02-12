@@ -17,7 +17,8 @@ namespace DAW2P0.Services.Impl
 
         public bool Autenticar(Usuario usuario)
         {
-            return true;
+            //acceso a la base de datos y comprobar las credenciales.
+            return ((usuario.password == "1234" && usuario.user == "admin")|| (usuario.password == "pepe" && usuario.user == "pepe"));
         }
     }
 }
