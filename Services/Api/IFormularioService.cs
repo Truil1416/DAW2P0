@@ -9,5 +9,6 @@ namespace DAW2P0.Services.Api
     public interface IFormularioService
     {
         void guardarFormulario(Formulario formulario);
+        List<Formulario> getFormularios();
     }
 }

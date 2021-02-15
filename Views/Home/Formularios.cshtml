@@ -1,0 +1,45 @@
+﻿@model IEnumerable<DAW2P0.Business.Formulario>
+
+@{
+    ViewData["Title"] = "Formularios";
+}
+
+<h1>Formularios</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Nombre
+            </th>
+            <th>
+                Primer Apellido
+            </th>
+            <th>
+                Segundo Apellido
+            </th>
+            <th>
+                Opinión
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.primerApellido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.segundoApellido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.opinion)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

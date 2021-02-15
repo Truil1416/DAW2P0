@@ -109,5 +109,9 @@ namespace DAW2P0.Controllers
         {
             return View();
         }
+        public IActionResult Formularios()
+        {
+            return View(ServiceManager.GetFormularioService().getFormularios());
+        }
     }
 }
