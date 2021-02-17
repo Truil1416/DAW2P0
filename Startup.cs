@@ -30,8 +30,8 @@ namespace DAW2P0
               .AddCookie(config =>
               {
                   config.Cookie.Name = "GENIUS.Cookie";
-                  config.LoginPath = "/Inicio/Login";
-                  config.AccessDeniedPath = "/Inicio/AccessDenied";
+                  config.LoginPath = "/Home/Login";
+                  config.AccessDeniedPath = "/Home/AccessDenied";
               });
             services.AddDistributedMemoryCache();
             services.AddControllersWithViews()

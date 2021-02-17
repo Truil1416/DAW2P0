@@ -6,6 +6,9 @@
     <title>@ViewData["Title"] - DAW2P0</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link href="~/lib/toastr.js/toastr.min.css" rel="stylesheet" />
+    <link href="~/lib/datatables/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="~/lib/datatables.net-select-dt/select.dataTables.min.css" rel="stylesheet" />
 </head>
 <body>
     <header>
@@ -28,13 +31,23 @@
                     <ul class="navbar-nav flex-grow-0">
                         <li class="nav-item ">
                             @{
+                                @*if (!User.Identity.IsAuthenticated)
+            {
+                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Login">LogIn</a>
+            }
+            else
+            {
+                <button type="button" onclick="desloguear()" class="btn btn-light">LogOut</button>
+
+            }*@
                                 if (!User.Identity.IsAuthenticated)
                                 {
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Login">LogIn</a>
+                                    //<button type="button" class="btn btn-info"><a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Login">LogIn</a></button>
+                                    <a type="button" class="btn btn-info" asp-area="" asp-controller="Home" asp-action="Login">LogIn</a>
                                 }
                                 else
                                 {
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="LogOut">LogOut</a>
+                                    <button type="button" onclick="desloguear()" class="btn btn-danger">LogOut</button>
                                 }
                             }
                         </li>
@@ -56,7 +69,14 @@
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/limonte-sweetalert2/sweetalert2.all.min.js"></script>
+    <!-- Include a polyfill for ES6 Promises (optional) for IE11 -->
+    <script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.js"></script>
+    <script src="~/lib/toastr.js/toastr.min.js"></script>
+    <script src="~/lib/datatables.net-select-dt/select.dataTables.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/toastGeneral.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

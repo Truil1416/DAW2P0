@@ -94,7 +94,7 @@ namespace DAW2P0.Controllers
         {
             HttpContext.Session.Clear();
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction("Login");
+            return Json(new { success = true, mensaje = "Se ha cerrado sesión" });
         }
         #endregion
         #region Manejo del Formulario
@@ -103,6 +103,10 @@ namespace DAW2P0.Controllers
         {
             ServiceManager.GetFormularioService().guardarFormulario(formulario);
             return RedirectToAction("Agradecimiento");
+        }
+        public IActionResult GetFormularios()
+        {
+            return Json(new { data = ServiceManager.GetFormularioService().getFormularios() });
         }
         #endregion
         public IActionResult Agradecimiento()
